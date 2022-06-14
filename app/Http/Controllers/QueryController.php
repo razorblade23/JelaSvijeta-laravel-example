@@ -19,6 +19,7 @@ class QueryController extends Controller
 
         if ($request->get('per_page')) {
             return $mealsQuery->paginate((int)$request->get('per_page'))->withPath('query');
+            // This is working OK
         }
 
         if ($request->get('category')) {
@@ -31,6 +32,7 @@ class QueryController extends Controller
             else {
                 $mealsQuery->where('category_id', $request->get('category'));
             }
+            // This is working OK
         }
 
 
@@ -38,6 +40,7 @@ class QueryController extends Controller
             $tags = explode(',', $request->get('tags'));
             foreach ($tags as $tag) {
                 $mealsQuery->where('tag_id', (int)$tag);
+                // This is working for 1 tag but not for more, not sure why
             }
         }
 
@@ -45,13 +48,13 @@ class QueryController extends Controller
             $withArgs = explode(',', $request->get('with'));
             foreach ($withArgs as $with) {
                 if ($with == 'ingredients') {
-                    $ingredientQuery->where('id', (int)$tag)->get();
+                    // Need to think this thru
                 }
                 if ($with == 'category') {
-
+                    // Need to think this thru
                 }
                 if ($with == 'tags') {
-
+                    // Need to think this thru
                 }
                 $mealsQuery->where('tag_id', (int)$tag);
             }
@@ -59,11 +62,11 @@ class QueryController extends Controller
         }
 
         if ($request->get('lang')) {
-
+            // Need to think this thru and populate (seed) database with translations
         }
 
         if ($request->get('diff_time')) {
-
+            // Need to think this thru
         }
 
         return $mealsQuery->get();
